@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170313165749) do
+ActiveRecord::Schema.define(version: 20170313185628) do
 
   create_table "alarms", force: :cascade do |t|
     t.text     "description"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 20170313165749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_groups_on_name", unique: true
+  end
+
+  create_table "upvotes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "alarm_id"
+    t.index ["alarm_id"], name: "index_upvotes_on_alarm_id"
   end
 
 end
