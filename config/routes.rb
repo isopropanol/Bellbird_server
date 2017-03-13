@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
+  resources :alarms
   scope '/api' do
-    resources :groups, except: [:new, :edit]
-    post 'groups/even' => 'groups#even'
+    resources :alarms, except: [:new, :edit]
+    # post 'groups/even' => 'groups#even'
   end
 
 
