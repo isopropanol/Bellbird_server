@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :alarms
   scope '/api' do
     resources :alarms, except: [:new, :edit]
-    # post 'groups/even' => 'groups#even'
+    post 'alarms/endpt' => 'alarms#post_to_handshake'
   end
 
 

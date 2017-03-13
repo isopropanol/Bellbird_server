@@ -1,3 +1,5 @@
+require 'unirest'
+
 class AlarmsController < ApplicationController
   before_action :set_alarm, only: [:show, :update, :destroy]
 
@@ -19,6 +21,7 @@ class AlarmsController < ApplicationController
     puts("do i get here?")
 
     if @alarm.save
+      post_to_handshake @alarm.id
       render json: @alarm, status: :created, location: @alarm
     else
       render json: @alarm.errors, status: :unprocessable_entity
@@ -39,6 +42,13 @@ class AlarmsController < ApplicationController
     @alarm.destroy
   end
 
+  def post_to_handshake a_id
+    response = Unirest.post "http://handshake-bellbird.herokuapp.com/push",
+                            headers: { "Accept" => "application/json" },
+                            parameters: {:alarm_id => a_id} {|response|
+    }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_alarm
@@ -47,6 +57,7 @@ class AlarmsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def alarm_params
+      puts params
       params.require(:alarm).permit(:description)
     end
 
